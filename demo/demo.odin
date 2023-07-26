@@ -58,7 +58,7 @@ main :: proc() {
 			free(ptr);
 
 			// Do some deliberate leaking
-			new(int);
+			leaky_int := new(int);
 	 	}
 
 	 	// Sync all workers to current frame.
@@ -104,6 +104,7 @@ random_sleep :: proc (r : ^rand.Rand) {
 }
 
 random_alloc :: proc (r : ^rand.Rand) -> rawptr {
-	return mem.alloc(1 + rand.int_max(1024, r));
+	res, _ := mem.alloc(1 + rand.int_max(1024, r));
+	return res;
 }
 
